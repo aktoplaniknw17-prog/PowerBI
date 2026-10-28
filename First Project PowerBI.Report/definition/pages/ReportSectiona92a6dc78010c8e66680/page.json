@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ReportSectiona92a6dc78010c8e66680",
+  "displayName": "6. 100% stacked column charts",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

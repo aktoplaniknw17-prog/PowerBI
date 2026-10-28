@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ReportSectionbfc2e8af886a1adccb09",
+  "displayName": "18.4 Treemap",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}
