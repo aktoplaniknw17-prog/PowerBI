@@ -1,0 +1,191 @@
+relationship b66d4df0-5df0-4e8e-8e57-5bebda31f89a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customerTable.dob
+	toColumn: LocalDateTable_b43d67b4-53f2-4ed2-8fae-971caeaff0a6.Date
+
+relationship 53783e9e-8cbb-49d0-80a9-dbcff68a2227
+	fromColumn: MenuItem.menu_group_id
+	toColumn: Menugroup.menu_group_id
+
+relationship 220f0b49-f361-4db7-a0fa-9d7fae3090b3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: order_master.delivery_date
+	toColumn: LocalDateTable_405fc84c-6b58-4af5-975b-91711f0f77a2.Date
+
+relationship 05449635-00e6-4f6a-88fd-9dba8c38857d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: order_master.order_date
+	toColumn: LocalDateTable_49b0e880-b17a-4431-bf3b-be1899ff2577.Date
+
+relationship aeb41c12-c2e8-4f3b-92ef-31b6c90341a3
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: order_master.cus_email
+	toColumn: customerTable.cus_email
+
+relationship ea5ad348-d8cf-42c1-af0c-074106962f49
+	joinOnDateBehavior: datePartOnly
+	fromColumn: order_detail.order_date
+	toColumn: LocalDateTable_44dee8b4-706d-4189-bd1e-84d4e1513d63.Date
+
+relationship 06dcda54-d646-4091-9ca1-3b2e8c83e21f
+	fromColumn: order_detail.cus_email
+	toColumn: customerTable.cus_email
+
+relationship 6276815c-bb31-4843-9650-a413eebea6db
+	fromColumn: order_detail.menu_id
+	toColumn: MenuItem.menu_id
+
+relationship 93d07005-76b3-4774-be99-b35542871f03
+	isActive: false
+	fromColumn: order_detail.menu_group_id
+	toColumn: Menugroup.menu_group_id
+
+relationship 3a57b5c6-2430-4c7c-bdff-dc0cc10abafa
+	isActive: false
+	fromColumn: order_detail.order_id
+	toColumn: order_master.order_id
+
+relationship 18c2f797-f198-4523-9e37-74c27f182fad
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Menu Inner Join'.menu_id
+	toColumn: MenuItem.menu_id
+
+relationship 94b83c46-4138-4ef0-9b39-df6dc0e507b9
+	isActive: false
+	fromColumn: 'Menu Inner Join'.menu_group_id
+	toColumn: Menugroup.menu_group_id
+
+relationship 59b30f0e-b387-42e1-a9fc-0a27066af9b0
+	fromColumn: order_master.pay_mode_id
+	toColumn: PaymentMode.pay_mode_id
+
+relationship 28fb0272-ce6f-4f23-bb28-38a1a95697d6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Payment_Mode_Merger.delivery_date
+	toColumn: LocalDateTable_fb2082d0-eb1c-4d03-b91b-5e337fc90b7c.Date
+
+relationship 1aacdc30-986b-48c4-a8c8-8ca38bab4c0f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Payment_Mode_Merger.order_date
+	toColumn: LocalDateTable_64352a46-b1e0-4fd1-b97c-4d81947f6555.Date
+
+relationship b666cae2-c189-4cac-bb48-d5e0a22bf809
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Payment_Mode_Merger.cus_email
+	toColumn: customerTable.cus_email
+
+relationship 2ec17737-3804-4373-8399-99a37769235a
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Payment_Mode_Merger.order_id
+	toColumn: order_master.order_id
+
+relationship da4556ad-2663-4616-aa30-ff23d8831217
+	isActive: false
+	fromColumn: Payment_Mode_Merger.pay_mode_id
+	toColumn: PaymentMode.pay_mode_id
+
+relationship 02827492-ac6e-49b6-8b7f-126fc650bb48
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'order_master (2)'.delivery_date
+	toColumn: LocalDateTable_4ebda767-b9a6-42d9-b460-a435581ea837.Date
+
+relationship bb194122-f91d-4f13-8be9-ea7524c0f4ea
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'order_master (2)'.order_date
+	toColumn: LocalDateTable_8ed2ee1c-8b0d-4e0f-beb9-d6db7ba83a22.Date
+
+relationship b9d7f183-1836-4b2c-bde7-31fa87fe3f99
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'order_master (2)'.cus_email
+	toColumn: customerTable.cus_email
+
+relationship 93c2cf1a-d230-4c13-b314-c5e6d03f3a5e
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'order_master (2)'.order_id
+	toColumn: order_master.order_id
+
+relationship ddaeeda2-0643-43ff-b4bc-d775c5594483
+	isActive: false
+	fromColumn: 'order_master (2)'.pay_mode_id
+	toColumn: PaymentMode.pay_mode_id
+
+relationship 891199e4-e204-411c-8a45-a5c058afce8c
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'order_master (2)'.'pay_detail_id '
+	toColumn: Payment_Mode_Merger.'pay_detail_id '
+
+relationship 2e526318-cd49-47b4-9dd4-0672c2cf2e39
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Order AND Payment'.delivery_date
+	toColumn: LocalDateTable_bcec7f6a-f0af-4c59-87b9-d66b2f7a8af4.Date
+
+relationship 95c572ef-39ec-4dee-b1a2-75085beb8c97
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Order AND Payment'.order_date
+	toColumn: LocalDateTable_162f24a5-c4df-4bed-82d8-9b16959ceeb0.Date
+
+relationship 4d35523d-ff3d-461b-85cd-3fad272538a8
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Order AND Payment'.cus_email
+	toColumn: customerTable.cus_email
+
+relationship fc0b8a43-6c19-4997-8517-6141c42f3dcd
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Order AND Payment'.order_id
+	toColumn: order_master.order_id
+
+relationship afca298e-90f9-47e7-a56b-0c0fafed3728
+	isActive: false
+	fromColumn: 'Order AND Payment'.pay_mode_id
+	toColumn: PaymentMode.pay_mode_id
+
+relationship 6fe3bc41-383b-4764-a953-51d87e251ed3
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Order AND Payment'.'pay_detail_id '
+	toColumn: Payment_Mode_Merger.'pay_detail_id '
+
+relationship 4bc9851a-1882-47f0-b89e-cb9ce276b806
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Order_detail_menu_group.order_date
+	toColumn: LocalDateTable_be77e895-53d6-477d-b8b0-4b0c26b6b875.Date
+
+relationship 06751c5a-2aad-4a11-be90-022322a67e9e
+	fromColumn: Order_detail_menu_group.cus_email
+	toColumn: customerTable.cus_email
+
+relationship 3eeaedf5-73d0-4e56-ae52-03fad645dd2d
+	fromColumn: Order_detail_menu_group.menu_id
+	toColumn: MenuItem.menu_id
+
+relationship d79af1aa-9365-427b-89a5-076d4636b7bf
+	isActive: false
+	fromColumn: Order_detail_menu_group.menu_group_id
+	toColumn: Menugroup.menu_group_id
+
+relationship 9cf5c69e-7ed8-4a73-8dc3-801be3dea374
+	isActive: false
+	fromColumn: Order_detail_menu_group.order_id
+	toColumn: order_master.order_id
+
+relationship 1a313ad6-283d-473a-bd59-5d5d32e1f537
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Order_detail_menu_group.order_detail_id
+	toColumn: order_detail.order_detail_id
+

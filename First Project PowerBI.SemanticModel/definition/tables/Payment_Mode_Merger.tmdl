@@ -1,0 +1,165 @@
+table Payment_Mode_Merger
+	lineageTag: 7a98e90f-02bd-4389-a442-d5182c8ad3c8
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b94e5dd-5edb-4b12-882e-e3ec54d67a79
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_email
+		dataType: string
+		lineageTag: 5af50f18-391e-44a9-8350-e690db5fb1fe
+		summarizeBy: none
+		sourceColumn: cus_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Cost '
+		dataType: string
+		lineageTag: 2800f96c-f528-4766-b4a7-c45bc1468912
+		summarizeBy: none
+		sourceColumn: "Order Cost "
+
+		annotation SummarizationSetBy = Automatic
+
+	column grand_total
+		dataType: double
+		lineageTag: c8210e08-f92b-4dbb-9ab0-1806c3e7f8ec
+		summarizeBy: sum
+		sourceColumn: grand_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column offier_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f4ee788e-0458-4788-acba-3f06abd74973
+		summarizeBy: sum
+		sourceColumn: offier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_amt
+		dataType: double
+		lineageTag: b56a93ec-e61b-40c5-ac7f-1785bfb55be1
+		summarizeBy: sum
+		sourceColumn: discount_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pay_amt
+		dataType: double
+		lineageTag: 8460e165-131e-4de5-b39b-ace6df8cff94
+		summarizeBy: sum
+		sourceColumn: pay_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_status
+		dataType: int64
+		formatString: 0
+		lineageTag: 81b9a755-d1ed-45b4-bfec-d1f541af574d
+		summarizeBy: sum
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_person_email
+		dataType: string
+		lineageTag: bca7fde9-6e4e-469a-bc8e-927a437a48e5
+		summarizeBy: none
+		sourceColumn: delivery_person_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 750e58cc-5983-40e0-a8a7-5f7648467dc3
+		summarizeBy: none
+		sourceColumn: delivery_date
+
+		variation Variation
+			isDefault
+			relationship: 28fb0272-ce6f-4f23-bb28-38a1a95697d6
+			defaultHierarchy: LocalDateTable_fb2082d0-eb1c-4d03-b91b-5e337fc90b7c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column pay_mode_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b97a0bc-df30-419c-afcd-52c4f1099b29
+		summarizeBy: sum
+		sourceColumn: pay_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ef3b15ba-91df-4282-b884-c83c329e4070
+		summarizeBy: none
+		sourceColumn: order_date
+
+		variation Variation
+			isDefault
+			relationship: 1aacdc30-986b-48c4-a8c8-8ca38bab4c0f
+			defaultHierarchy: LocalDateTable_64352a46-b1e0-4fd1-b97c-4d81947f6555.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'pay_detail_id '
+		dataType: int64
+		formatString: 0
+		lineageTag: b7826540-4003-4c81-a515-8e1f0aac23a5
+		summarizeBy: sum
+		sourceColumn: "pay_detail_id "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 91eb2f65-d118-455c-abb1-54ce0d454455
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PaymentMode.payment_mode_name'
+		dataType: string
+		lineageTag: c105d6e4-4a2c-42c8-9670-356407d209c2
+		summarizeBy: none
+		sourceColumn: PaymentMode.payment_mode_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Payment_Mode_Merger-347a46ac-b2b3-4549-b45f-940ceaa1758d = m
+		mode: import
+		source =
+				let
+				    Source = Table.NestedJoin(order_master, {"pay_mode_id"}, PaymentMode, {"pay_mode_id"}, "PaymentMode", JoinKind.Inner),
+				    #"Expanded PaymentMode" = Table.ExpandTableColumn(Source, "PaymentMode", {"payment_mode_name"}, {"PaymentMode.payment_mode_name"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Expanded PaymentMode","South West","South",Replacer.ReplaceText,{"Region"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","South East","South",Replacer.ReplaceText,{"Region"})
+				in
+				    #"Replaced Value1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,52 @@
+table MenuItem
+	lineageTag: 17763568-0ea1-4c94-be61-6c55b1fe3faa
+
+	column menu_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 23299b1f-d743-4f89-bb77-3263c2b0ac99
+		summarizeBy: none
+		sourceColumn: menu_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_group_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 713fc46f-d710-4875-aa7e-ffb8a906979b
+		summarizeBy: none
+		sourceColumn: menu_group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_item_name
+		dataType: string
+		lineageTag: caf672c1-f61c-4f06-8bda-4ba50d67c0d3
+		summarizeBy: none
+		sourceColumn: menu_item_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 30150561-f6c2-42bb-91de-0af7d1c1b227
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition MenuItem-edadf2ed-ab05-4d67-a53f-dd54d84c77ac = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\KRUPALI\OneDrive - Mitaja Corporation\KRUPALI_OFFICE_MITAJA\PROJECT BASED TRAINING\Power BI Online Food Delivey\ONLINE_FOOD_DELIVERY_DATA.xlsx"), null, true),
+				    MenuItem_Sheet = Source{[Item="MenuItem",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(MenuItem_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"menu_id", Int64.Type}, {"menu_group_id", Int64.Type}, {"menu_item_name", type text}, {"price", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

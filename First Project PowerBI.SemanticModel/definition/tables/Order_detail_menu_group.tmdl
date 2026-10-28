@@ -1,0 +1,122 @@
+table Order_detail_menu_group
+	lineageTag: 723cf453-d805-405d-8f03-eee81ed4f1f9
+
+	column order_detail_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0afbcc47-1b94-425f-a9c2-3f6307d14e7b
+		summarizeBy: sum
+		sourceColumn: order_detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cart_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 87577f79-27d8-4ca8-a374-d4bcdcb52b76
+		summarizeBy: sum
+		sourceColumn: cart_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_email
+		dataType: string
+		lineageTag: 54baeb01-859b-4606-89e8-13888bc5edd8
+		summarizeBy: none
+		sourceColumn: cus_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_group_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d9df0be6-302c-44c2-9282-efa6c664b41e
+		summarizeBy: sum
+		sourceColumn: menu_group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f977898c-0ec2-4c90-9686-22e18631ac69
+		summarizeBy: none
+		sourceColumn: menu_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 903843eb-d747-49de-bd61-2eebcf11f5f8
+		summarizeBy: sum
+		sourceColumn: qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 1687b6eb-b43c-4c45-a237-14e6f2756f9d
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sub_total
+		dataType: double
+		lineageTag: 8488c049-6f21-4108-b6ea-f61be22c66a3
+		summarizeBy: sum
+		sourceColumn: sub_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 80a8fd56-7add-45e9-bb58-618a60cdbd99
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b84a0dbb-04bb-4e9e-bd9d-8ef769ececff
+		summarizeBy: none
+		sourceColumn: order_date
+
+		variation Variation
+			isDefault
+			relationship: 4bc9851a-1882-47f0-b89e-cb9ce276b806
+			defaultHierarchy: LocalDateTable_be77e895-53d6-477d-b8b0-4b0c26b6b875.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Menugroup.group_name'
+		dataType: string
+		lineageTag: 35a8ba51-70ea-4f33-b4bc-5df5d1474db7
+		summarizeBy: none
+		sourceColumn: Menugroup.group_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Order_detail_menu_group-ddf30850-dcc8-41f8-ac74-9d63aae855c9 = m
+		mode: import
+		source =
+				let
+				    Source = Table.NestedJoin(order_detail, {"menu_group_id"}, Menugroup, {"menu_group_id"}, "Menugroup", JoinKind.Inner),
+				    #"Expanded Menugroup" = Table.ExpandTableColumn(Source, "Menugroup", {"group_name"}, {"Menugroup.group_name"})
+				in
+				    #"Expanded Menugroup"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

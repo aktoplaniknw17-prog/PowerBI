@@ -1,0 +1,161 @@
+table 'order_master (2)'
+	lineageTag: 61f88f96-3398-4962-8b56-6e85a8722a6d
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9821e261-9dcc-4082-90ef-c9ce52202280
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_email
+		dataType: string
+		lineageTag: 6ededc01-d71f-4bae-a434-2af70ac08596
+		summarizeBy: none
+		sourceColumn: cus_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Cost '
+		dataType: double
+		lineageTag: 0d38d872-98a0-4187-a84c-0bee449a9dd3
+		summarizeBy: sum
+		sourceColumn: "Order Cost "
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column grand_total
+		dataType: double
+		lineageTag: 540326a8-cdc9-4a95-9cf0-3c759339467a
+		summarizeBy: sum
+		sourceColumn: grand_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column offier_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ce673e7b-1166-4a9f-a45a-2a5a3bb9911e
+		summarizeBy: sum
+		sourceColumn: offier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_amt
+		dataType: double
+		lineageTag: 93395181-bd51-4742-9db6-3e3a99297fce
+		summarizeBy: sum
+		sourceColumn: discount_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pay_amt
+		dataType: double
+		lineageTag: cefc42c6-aec1-44af-81ec-0a78b91d2cf6
+		summarizeBy: sum
+		sourceColumn: pay_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_status
+		dataType: int64
+		formatString: 0
+		lineageTag: fa9d8310-e534-4f82-91ce-9b2b4fcaa7be
+		summarizeBy: sum
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_person_email
+		dataType: string
+		lineageTag: ed452cd4-8766-41e3-a4b2-d95437dc1c9b
+		summarizeBy: none
+		sourceColumn: delivery_person_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 61bed36a-5ab3-4c3d-b580-7efbed9734fb
+		summarizeBy: none
+		sourceColumn: delivery_date
+
+		variation Variation
+			isDefault
+			relationship: 02827492-ac6e-49b6-8b7f-126fc650bb48
+			defaultHierarchy: LocalDateTable_4ebda767-b9a6-42d9-b460-a435581ea837.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column pay_mode_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 91886104-d702-412b-b7ee-d648303b0cfe
+		summarizeBy: sum
+		sourceColumn: pay_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e05d3931-ede5-4484-a1d7-7057765991dd
+		summarizeBy: none
+		sourceColumn: order_date
+
+		variation Variation
+			isDefault
+			relationship: bb194122-f91d-4f13-8be9-ea7524c0f4ea
+			defaultHierarchy: LocalDateTable_8ed2ee1c-8b0d-4e0f-beb9-d6db7ba83a22.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'pay_detail_id '
+		dataType: int64
+		formatString: 0
+		lineageTag: 27ae5d60-f5ce-4dc8-9415-99367169830f
+		summarizeBy: sum
+		sourceColumn: "pay_detail_id "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 356e99c0-cf32-45cc-b5dd-807b59e79453
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'order_master (2)-1abd09d5-993b-44c0-8c04-df01599a0ec6' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\KRUPALI\OneDrive - Mitaja Corporation\KRUPALI_OFFICE_MITAJA\PROJECT BASED TRAINING\Power BI Online Food Delivey\ONLINE_FOOD_DELIVERY_DATA.xlsx"), null, true),
+				    order_master_Sheet = Source{[Item="order_master",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(order_master_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_id", Int64.Type}, {"cus_email", type text}, {"Order Cost ", type number}, {"grand_total", type number}, {"offier_id", Int64.Type}, {"discount_amt", type number}, {"pay_amt", type number}, {"order_status", Int64.Type}, {"delivery_person_email", type text}, {"delivery_date", type date}, {"pay_mode_id", Int64.Type}, {"order_date", type date}, {"pay_detail_id ", Int64.Type}, {"Region", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","South West","South",Replacer.ReplaceText,{"Region"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","South East","South",Replacer.ReplaceText,{"Region"})
+				in
+				    #"Replaced Value1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

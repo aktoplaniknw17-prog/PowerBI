@@ -1,0 +1,147 @@
+table order_master
+	lineageTag: 450e4003-88d1-4ab3-a148-658050460752
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 895e7014-5b16-41fa-a51f-a45f1e3b6a07
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_email
+		dataType: string
+		lineageTag: 4d3caf0f-10d5-4b5e-8807-17c436e43eec
+		summarizeBy: none
+		sourceColumn: cus_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column grand_total
+		dataType: double
+		lineageTag: a9677152-0fa7-4e54-afa2-2738b53a7c00
+		summarizeBy: sum
+		sourceColumn: grand_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column offier_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c56e3cb6-8a13-4eb6-bca8-25a5351f709d
+		summarizeBy: sum
+		sourceColumn: offier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_amt
+		dataType: double
+		lineageTag: 9f46f80c-600e-4344-8026-f98b15eaf11e
+		summarizeBy: sum
+		sourceColumn: discount_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pay_amt
+		dataType: double
+		lineageTag: e12b7d29-c094-4119-a074-b9849f76c442
+		summarizeBy: sum
+		sourceColumn: pay_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_status
+		dataType: int64
+		formatString: 0
+		lineageTag: ea254450-08b0-4a90-8697-4f7de29c7c71
+		summarizeBy: sum
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_person_email
+		dataType: string
+		lineageTag: 036bf95a-4bab-4147-8c22-fa536a8eac13
+		summarizeBy: none
+		sourceColumn: delivery_person_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8f68f8d6-e4a0-45f9-a5fb-f8e101daa168
+		summarizeBy: none
+		sourceColumn: delivery_date
+
+		variation Variation
+			isDefault
+			relationship: 220f0b49-f361-4db7-a0fa-9d7fae3090b3
+			defaultHierarchy: LocalDateTable_405fc84c-6b58-4af5-975b-91711f0f77a2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column pay_mode_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 17da1e5a-a92c-4e3a-b1f6-2155d7a0f34f
+		summarizeBy: none
+		sourceColumn: pay_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 42afd45e-d752-4a56-b8a0-fbb19ccecefd
+		summarizeBy: none
+		sourceColumn: order_date
+
+		variation Variation
+			isDefault
+			relationship: 05449635-00e6-4f6a-88fd-9dba8c38857d
+			defaultHierarchy: LocalDateTable_49b0e880-b17a-4431-bf3b-be1899ff2577.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'pay_detail_id '
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e2e6687-3999-469c-ba5f-e51ea94acd60
+		summarizeBy: sum
+		sourceColumn: "pay_detail_id "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: df3a1d6c-c45f-4ade-93a5-b895ee8de575
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition order_master-61308120-45f7-4ec4-ac58-6d6600c94657 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\KRUPALI\OneDrive - Mitaja Corporation\KRUPALI_OFFICE_MITAJA\PROJECT BASED TRAINING\Power BI Online Food Delivey\ONLINE_FOOD_DELIVERY_DATA.xlsx"), null, true),
+				    order_master_Sheet = Source{[Item="order_master",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(order_master_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_id", Int64.Type}, {"cus_email", type text}, {"grand_total", type number}, {"offier_id", Int64.Type}, {"discount_amt", type number}, {"pay_amt", type number}, {"order_status", Int64.Type}, {"delivery_person_email", type text}, {"delivery_date", type date}, {"pay_mode_id", Int64.Type}, {"order_date", type date}, {"pay_detail_id ", Int64.Type}, {"Region", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

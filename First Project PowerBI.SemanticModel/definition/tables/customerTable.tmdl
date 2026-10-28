@@ -1,0 +1,132 @@
+table customerTable
+	lineageTag: 245a6a7f-5da6-4c4a-8492-b2c8a89d0980
+
+	column cus_first_name
+		dataType: string
+		lineageTag: 413b3098-7d70-4bc2-8f09-d10851481249
+		summarizeBy: none
+		sourceColumn: cus_first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_last_name
+		dataType: string
+		lineageTag: a9047faa-15a7-462d-8718-0f514b30209a
+		summarizeBy: none
+		sourceColumn: cus_last_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: e9ad2123-4c85-4ba6-aa9b-ded143b74292
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_email
+		dataType: string
+		lineageTag: fc5d1f87-2686-47a3-aef0-5e16dd264cc3
+		summarizeBy: none
+		sourceColumn: cus_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column dob
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9ee68627-293b-402d-a321-95966693fba5
+		summarizeBy: none
+		sourceColumn: dob
+
+		variation Variation
+			isDefault
+			relationship: b66d4df0-5df0-4e8e-8e57-5bebda31f89a
+			defaultHierarchy: LocalDateTable_b43d67b4-53f2-4ed2-8fae-971caeaff0a6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column contact_no1
+		dataType: string
+		lineageTag: 31be9a99-9bc0-405d-ba53-b9e450f20de7
+		summarizeBy: none
+		sourceColumn: contact_no1
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact_no2
+		dataType: string
+		lineageTag: 5f4e7479-8327-43e9-bbe3-e2f00f33af1c
+		summarizeBy: none
+		sourceColumn: contact_no2
+
+		annotation SummarizationSetBy = Automatic
+
+	column address
+		dataType: string
+		lineageTag: a7c8e3ad-bfb1-442a-b56d-c268c164134f
+		summarizeBy: none
+		sourceColumn: address
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 3224a6ac-21cb-471b-abbc-b72190be18b6
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: c49a394d-0762-4692-b454-ea6591b5b624
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: df476da4-76d2-48df-a1ea-d636783cbf7e
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column zipcode
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b9dbafa-7887-4900-97a5-ae832ddfa9d5
+		summarizeBy: sum
+		sourceColumn: zipcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column password
+		dataType: string
+		lineageTag: 25a340d1-1325-4dae-8602-3014eb87c180
+		summarizeBy: none
+		sourceColumn: password
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customerTable-cacb2db0-b488-4493-a503-e13ab7180f95 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\KRUPALI\OneDrive - Mitaja Corporation\KRUPALI_OFFICE_MITAJA\PROJECT BASED TRAINING\Power BI Online Food Delivey\ONLINE_FOOD_DELIVERY_DATA.xlsx"), null, true),
+				    customerTable_Sheet = Source{[Item="customerTable",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(customerTable_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cus_first_name", type text}, {"cus_last_name", type text}, {"gender", type text}, {"cus_email", type text}, {"dob", type date}, {"contact_no1", type text}, {"contact_no2", type text}, {"address", type text}, {"city", type text}, {"Region", type text}, {"state", type text}, {"zipcode", Int64.Type}, {"password", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each true)
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,7 @@
+role Role_1_krupali
+	modelPermission: read
+
+	tablePermission customerTable = [Region] = "EAST"
+
+	annotation PBI_Id = ac961e456fd64f5b9eb9ad8a74d9941e
+

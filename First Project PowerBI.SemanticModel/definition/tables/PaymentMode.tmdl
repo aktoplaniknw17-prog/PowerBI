@@ -1,0 +1,33 @@
+table PaymentMode
+	lineageTag: cc4c8917-f5be-49b6-ad75-64c1b88193e8
+
+	column pay_mode_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 25ce6258-07f0-44c4-9552-f363e1e995e8
+		summarizeBy: none
+		sourceColumn: pay_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_mode_name
+		dataType: string
+		lineageTag: dd2ef923-08f3-4c53-a2b9-aff9f4a5564c
+		summarizeBy: none
+		sourceColumn: payment_mode_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PaymentMode-a4ef311c-8bb4-4414-928d-3c306af7acf2 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\KRUPALI\OneDrive - Mitaja Corporation\KRUPALI_OFFICE_MITAJA\PROJECT BASED TRAINING\Power BI Online Food Delivey\ONLINE_FOOD_DELIVERY_DATA.xlsx"), null, true),
+				    PaymentMode_Sheet = Source{[Item="PaymentMode",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(PaymentMode_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"pay_mode_id", Int64.Type}, {"payment_mode_name", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

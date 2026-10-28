@@ -1,0 +1,169 @@
+table 'Order AND Payment'
+	lineageTag: f21ab3ec-7b55-45fc-8c5e-ea64d4f7d657
+
+	measure 'target pay' = 9000
+		lineageTag: 082ef2cb-e03a-4fde-8310-6e0073e24f9a
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "FilteredMeasure"
+				}
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: e6b9cb9f-e123-4f0e-8b7e-97390b8ba929
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_email
+		dataType: string
+		lineageTag: 1524ba49-7ae2-4d22-91b7-91cd95589076
+		summarizeBy: none
+		sourceColumn: cus_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Cost '
+		dataType: double
+		lineageTag: 2353f86e-184a-4121-9507-3ad8bba53237
+		summarizeBy: sum
+		sourceColumn: "Order Cost "
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column grand_total
+		dataType: double
+		lineageTag: c303e5ad-b52b-49bb-ad66-50a558798752
+		summarizeBy: sum
+		sourceColumn: grand_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column offier_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 31605692-fe9e-41ee-8355-e76a7c4b1a98
+		summarizeBy: sum
+		sourceColumn: offier_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_amt
+		dataType: double
+		lineageTag: deefdcff-6081-4171-a9f3-779b7ac22761
+		summarizeBy: sum
+		sourceColumn: discount_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pay_amt
+		dataType: double
+		lineageTag: bcff1a7b-c84f-45e5-ac35-b83d0be2be2d
+		summarizeBy: sum
+		sourceColumn: pay_amt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_status
+		dataType: int64
+		formatString: 0
+		lineageTag: c0940e71-8bf4-4a18-a00d-c6d47d48fb25
+		summarizeBy: sum
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_person_email
+		dataType: string
+		lineageTag: 28171590-488c-415c-a791-455b78c904de
+		summarizeBy: none
+		sourceColumn: delivery_person_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d051a066-1739-44ec-a06a-1d6d9c9a4878
+		summarizeBy: none
+		sourceColumn: delivery_date
+
+		variation Variation
+			isDefault
+			relationship: 2e526318-cd49-47b4-9dd4-0672c2cf2e39
+			defaultHierarchy: LocalDateTable_bcec7f6a-f0af-4c59-87b9-d66b2f7a8af4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column pay_mode_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 187b7d31-10f5-4449-ad18-cc004e25b697
+		summarizeBy: sum
+		sourceColumn: pay_mode_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a7a7c657-b498-486e-9e25-286dd1b44ba6
+		summarizeBy: none
+		sourceColumn: order_date
+
+		variation Variation
+			isDefault
+			relationship: 95c572ef-39ec-4dee-b1a2-75085beb8c97
+			defaultHierarchy: LocalDateTable_162f24a5-c4df-4bed-82d8-9b16959ceeb0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'pay_detail_id '
+		dataType: int64
+		formatString: 0
+		lineageTag: 780749ab-392b-474e-86cf-ec69f2a0aa2a
+		summarizeBy: sum
+		sourceColumn: "pay_detail_id "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 08fd4436-fb07-44db-bc68-a635d15cad62
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Order AND Payment-27220122-2e26-467b-a724-05f7960672c7' = m
+		mode: import
+		source =
+				let
+				    Source = Table.NestedJoin(#"order_master (2)", {"pay_detail_id "}, PaymentMode, {"pay_mode_id"}, "PaymentMode", JoinKind.LeftOuter)
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

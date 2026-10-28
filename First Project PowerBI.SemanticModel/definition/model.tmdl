@@ -1,0 +1,42 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["customerTable","MenuItem","Menugroup","order_master","order_detail","Menu Inner Join","PaymentMode","Payment_Mode_Merger","order_master (2)","Order AND Payment","Order_detail_menu_group"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table customerTable
+ref table DateTableTemplate_8e9b5e00-05cc-4f37-a38f-9cafc7029720
+ref table LocalDateTable_b43d67b4-53f2-4ed2-8fae-971caeaff0a6
+ref table MenuItem
+ref table Menugroup
+ref table order_master
+ref table LocalDateTable_405fc84c-6b58-4af5-975b-91711f0f77a2
+ref table LocalDateTable_49b0e880-b17a-4431-bf3b-be1899ff2577
+ref table order_detail
+ref table LocalDateTable_44dee8b4-706d-4189-bd1e-84d4e1513d63
+ref table 'Menu Inner Join'
+ref table PaymentMode
+ref table Payment_Mode_Merger
+ref table LocalDateTable_fb2082d0-eb1c-4d03-b91b-5e337fc90b7c
+ref table LocalDateTable_64352a46-b1e0-4fd1-b97c-4d81947f6555
+ref table 'order_master (2)'
+ref table LocalDateTable_4ebda767-b9a6-42d9-b460-a435581ea837
+ref table LocalDateTable_8ed2ee1c-8b0d-4e0f-beb9-d6db7ba83a22
+ref table 'Order AND Payment'
+ref table LocalDateTable_bcec7f6a-f0af-4c59-87b9-d66b2f7a8af4
+ref table LocalDateTable_162f24a5-c4df-4bed-82d8-9b16959ceeb0
+ref table Order_detail_menu_group
+ref table LocalDateTable_be77e895-53d6-477d-b8b0-4b0c26b6b875
+
+ref role Role_1_krupali
+
+ref cultureInfo en-US
+

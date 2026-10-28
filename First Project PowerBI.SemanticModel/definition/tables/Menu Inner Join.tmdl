@@ -1,0 +1,70 @@
+table 'Menu Inner Join'
+	lineageTag: ddc1038d-6c41-43ab-bf7c-abb1e228f7c5
+
+	measure Measure
+		lineageTag: 9354972c-4e9e-4ef4-8284-27920f30711e
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Measure 2'
+		lineageTag: a87cf295-fad9-4dda-b1b2-7dc658570843
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	column menu_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 13fec5d6-f90a-44cc-8a29-91d54de3ec5c
+		summarizeBy: none
+		sourceColumn: menu_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_group_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ea020d41-23d3-4840-b8cc-ee9e774de070
+		summarizeBy: sum
+		sourceColumn: menu_group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_item_name
+		dataType: string
+		lineageTag: 5205b84a-aa02-42ad-a950-d6a626a016ec
+		summarizeBy: none
+		sourceColumn: menu_item_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 7cb83698-c65c-47cc-ae45-27f0edf3c076
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Menugroup.group_name'
+		dataType: string
+		lineageTag: 82d7124f-55b2-496e-b2ee-ad57df1437f1
+		summarizeBy: none
+		sourceColumn: Menugroup.group_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Menu Inner Join-fbb3eae0-7d1d-4ea5-9ae1-e425fc226e8d' = m
+		mode: import
+		source =
+				let
+				    Source = Table.NestedJoin(MenuItem, {"menu_group_id"}, Menugroup, {"menu_group_id"}, "Menugroup", JoinKind.Inner),
+				    #"Expanded Menugroup" = Table.ExpandTableColumn(Source, "Menugroup", {"group_name"}, {"Menugroup.group_name"})
+				in
+				    #"Expanded Menugroup"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

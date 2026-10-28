@@ -1,0 +1,114 @@
+table order_detail
+	lineageTag: ed9844d5-5d59-473e-bcc0-e0088e90dcb8
+
+	column order_detail_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9be9be92-ac5d-4397-8585-2644473a194f
+		summarizeBy: sum
+		sourceColumn: order_detail_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cart_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 81c2a398-6f83-4048-93fa-61769893c81b
+		summarizeBy: sum
+		sourceColumn: cart_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cus_email
+		dataType: string
+		lineageTag: 05b6aacd-41b1-43e6-a740-4f7cee43eb09
+		summarizeBy: none
+		sourceColumn: cus_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_group_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ddc5c0ca-06d7-48d7-8bdc-180711be8b38
+		summarizeBy: sum
+		sourceColumn: menu_group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column menu_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 62204da2-1ed7-4d7f-b343-823f5d119517
+		summarizeBy: none
+		sourceColumn: menu_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d9f07e0-8742-42bb-96d5-378979485ced
+		summarizeBy: sum
+		sourceColumn: qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 3eb46738-da3c-4ad5-bcb9-322a79b916ad
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sub_total
+		dataType: double
+		lineageTag: df64d231-851c-48a5-a24f-e896c5ca0706
+		summarizeBy: sum
+		sourceColumn: sub_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 56b7de1a-7f18-4422-a2f5-fa0699175991
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 12e5e26b-f78e-4452-b1c3-d5361a1a9a7b
+		summarizeBy: none
+		sourceColumn: order_date
+
+		variation Variation
+			isDefault
+			relationship: ea5ad348-d8cf-42c1-af0c-074106962f49
+			defaultHierarchy: LocalDateTable_44dee8b4-706d-4189-bd1e-84d4e1513d63.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition order_detail-1ba44be9-926e-468c-8b69-7b2a55c649dc = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\KRUPALI\OneDrive - Mitaja Corporation\KRUPALI_OFFICE_MITAJA\PROJECT BASED TRAINING\Power BI Online Food Delivey\ONLINE_FOOD_DELIVERY_DATA.xlsx"), null, true),
+				    order_detail_Sheet = Source{[Item="order_detail",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(order_detail_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_detail_id", Int64.Type}, {"cart_id", Int64.Type}, {"cus_email", type text}, {"menu_group_id", Int64.Type}, {"menu_id", Int64.Type}, {"qty", Int64.Type}, {"price", type number}, {"sub_total", type number}, {"order_id", Int64.Type}, {"order_date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

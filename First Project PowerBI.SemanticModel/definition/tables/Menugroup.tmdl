@@ -1,0 +1,33 @@
+table Menugroup
+	lineageTag: ef7e5c10-9706-46c1-93b4-570a73839ae5
+
+	column menu_group_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 24a9b4fb-1e4f-4407-aacb-cb1592a5f392
+		summarizeBy: none
+		sourceColumn: menu_group_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column group_name
+		dataType: string
+		lineageTag: 8806a52a-cc48-4dbc-b4b9-259aa9cacd45
+		summarizeBy: none
+		sourceColumn: group_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Menugroup-be0a8789-050e-4b22-8c78-60748aef16d6 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\KRUPALI\OneDrive - Mitaja Corporation\KRUPALI_OFFICE_MITAJA\PROJECT BASED TRAINING\Power BI Online Food Delivey\ONLINE_FOOD_DELIVERY_DATA.xlsx"), null, true),
+				    Menugroup_Sheet = Source{[Item="Menugroup",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Menugroup_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"menu_group_id", Int64.Type}, {"group_name", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
